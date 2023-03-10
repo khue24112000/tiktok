@@ -1,0 +1,103 @@
+import { useEffect, useState } from "react"
+
+// Lưu ý sử dụng useEffect
+// Events: Add / Remove event listener
+// Observed pattern: subscribe / unsubscribe
+// Closure
+// Timer: setTimeout, setInterval, clearTimeout, clearInterval
+// useState
+// Mouted, Unmounted
+// Toan tu ===
+// Call API
+// -----------------------------
+// 1. useEffect(callback)
+// - Gọi callback mỗi khi component re-render
+// - Gọi callback sau khi thêm component vào DOM
+// 2. useEffect(callback, [])
+// - Chỉ gọi calllback 1 lần sau khi component mounted
+// 3. useEffect(callback, [deps])
+// - callback sẽ được gọi lại mỗi khi deps thay đổi
+// --------------------------
+// 1. Callback luôn được gọi mỗi khi component được mounted
+// 2. Cleanup function luôn được gọi trước khi component unmount
+// 3. Cleanup function luôn được gọi trước khi callback được gọi (trừ lúc mounted component)
+
+const lessons = [
+    {
+        id: 1,
+        name: 'ReactJS la gi? Tai sao nen hoc'
+    },
+    {
+        id: 2,
+        name: 'SPA/MPA la gi'
+    },
+    {
+        id: 3,
+        name: 'Arrow function'
+    }
+]
+
+
+function Content() {
+
+    // Avatar preview
+    // const [avatar, setAvatar] = useState()
+    // const handleAvatarPreview = (e) => {
+    //     const file = e.target.files[0]
+    //     file.preview = URL.createObjectURL(file)
+    //     setAvatar(file)
+    //     e.target.value = null
+    //     console.log(123)
+    // }
+
+    // useEffect(() => () => avatar && URL.revokeObjectURL(avatar.preview))
+    // return (
+    //     <div>
+    //         <input
+    //             type="file"
+    //             onChange={handleAvatarPreview}
+    //         />
+
+    //         {avatar &&
+    //             <img src={avatar.preview} alt='' />
+    //         }
+    //     </div>
+    // )
+
+    // Fake Chat API
+    const [lessonId, setLessonId] = useState(1)
+
+    useEffect(() => {
+        const handleComment = ({ detail }) => {
+            console.log(detail)
+        }
+        window.addEventListener(`lesson-${lessonId}`, handleComment)
+
+        return () => {
+            window.removeEventListener(`lesson-${lessonId}`, handleComment)
+
+        }
+    }, [lessonId])
+
+    return (
+        <div>
+            <ul>
+                {lessons.map(lesson => (
+                    <li
+                        key={lesson.id}
+                        style={
+                            lessonId === lesson.id ?
+                                { opacity: 1, cursor: "pointer" } :
+                                { opacity: 0.5, cursor: "pointer" }
+                        }
+                        onClick={() => setLessonId(lesson.id)}
+                    >
+                        {lesson.name}
+                    </li>
+                ))}
+            </ul>
+        </div>
+    )
+}
+
+export default Content

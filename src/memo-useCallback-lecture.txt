@@ -1,0 +1,19 @@
+import { useState, memo  } from "react"
+
+// 1. memo() -> Higher Order Component (HOC)
+// 2. useCallback()
+
+// Hooks
+// HOC
+// Render props
+
+function Content() {
+    
+    return (
+        <div>
+            <h1>hi</h1>
+        </div>
+    )
+}
+
+export default Content

@@ -1,0 +1,41 @@
+import { useState, useRef, useEffect } from "react"
+
+// Lưu các giá trị qua 1 tham chiếu bên ngoài
+// function component
+
+function Content() {
+    const [count, setCount] = useState(60)
+    const timeRef = useRef()
+    const countRef = useRef()
+    const h1Ref = useRef()
+
+    const handleStart = () => {
+        timeRef.current = setInterval(() => {
+            setCount(prev => prev - 1)
+        }, 1000);
+    }
+
+    const handleStop = () => {
+        clearInterval(timeRef.current)
+    }
+
+    useEffect(() => {
+        countRef.current = count
+    },[count])
+
+    useEffect(() => {
+        console.log(h1Ref.current)
+    })
+
+    console.log("Gia tri truoc: ", countRef.current + " Gia tri hien tai: ", count)
+
+    return (
+        <div>
+            <h1 ref={h1Ref}>{count}</h1>
+            <button onClick={handleStart}>Start</button>
+            <button onClick={handleStop}>Stop</button>
+        </div>
+    )
+}
+
+export default Content

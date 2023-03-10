@@ -1,0 +1,19 @@
+import video1 from './Video/video_01.mp4'
+import { useRef, forwardRef, useImperativeHandle } from 'react'
+function Video(props, ref) {
+    const videoRef = useRef()
+    
+    useImperativeHandle(ref, () => ({
+        play() {
+            videoRef.current.play()
+        },
+        pause() {
+            videoRef.current.pause()
+        }
+    }))
+    return (
+        <video ref = {videoRef} src={video1} width={500} />
+    )
+}
+
+export default forwardRef(Video)
